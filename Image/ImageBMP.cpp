@@ -56,12 +56,13 @@ namespace RP
 
 		for(int i = 0; i < (int)(w*h); i++)
 		{
-			//Vec4f color = colors[i].get(); it doesnt work like that i should ovrload the = operator i guess
-			Vec4f color;
-			color = colors[i].get(); // it works like that Oo wierd
-			this->PixelData[(i* 4)+ 0] = Floattochar(color[0]); // red
+			//Vec4f color = colors[i].get(); it doesnt work like that i should overload the = operator i guess--- nop it's not the overload prob
+			Vec4f color = colors[i].get(); // know it's fixed with key word const lol
+
+			//change the order cause the coder of bmp read color as bgr not rgb fuck this  xd
+			this->PixelData[(i* 4)+ 0] = Floattochar(color[2]); // blue
 			this->PixelData[(i* 4)+ 1] = Floattochar(color[1]); // green
-			this->PixelData[(i* 4)+ 2] = Floattochar(color[2]); // blue
+			this->PixelData[(i* 4)+ 2] = Floattochar(color[0]); // red
 			this->PixelData[(i* 4)+ 3] = Floattochar(color[3]); // Alpha
 		}
 	}

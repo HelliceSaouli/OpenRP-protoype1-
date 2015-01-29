@@ -34,7 +34,7 @@ Vec3f::Vec3f(float a, float b,float c) // create a vector from 2 numbers a,b our
 	z = c;
 }
 
-Vec3f::Vec3f(Vec3f &v) // create a vector from an other vector
+Vec3f::Vec3f(const Vec3f &v) // create a vector from an other vector
 {
 	x = v.x;
 	y = v.y;
@@ -53,7 +53,7 @@ Vec3f::~Vec3f()
  ****************************************************************/
 
 
-float Vec3f::getX()
+float Vec3f::getX()const
 {
 	return this->x;
 }
@@ -63,7 +63,7 @@ void Vec3f::setX(float s)
 	 this->x  =  s;
 }
 
-float Vec3f::getY()
+float Vec3f::getY()const
 {
 	return this->y;
 }
@@ -73,7 +73,7 @@ void Vec3f::setY(float s)
 	this->y = s;
 }
 
-float Vec3f::getZ()
+float Vec3f::getZ()const
 {
 	return this->z;
 }
@@ -99,6 +99,12 @@ void Vec3f::Zeros()
  * Overloading oprators
  ***************************************************************/
 
+const float Vec3f::operator [] (int i)const
+{
+	assert(i >= 0); // make sure everthing is ok with indexing
+	return *(&x + i);
+}
+
 float& Vec3f::operator [] (int i)
 {
 	assert(i >= 0); // make sure everthing is ok with indexing
@@ -112,7 +118,7 @@ Vec3f Vec3f::operator -() const
 	return Nigative;
 }
 
-Vec3f Vec3f::operator +(Vec3f a)
+Vec3f Vec3f::operator +(const Vec3f &a)const
 {
 	Vec3f R;
 	R.x = this->x + a.x;
@@ -122,7 +128,7 @@ Vec3f Vec3f::operator +(Vec3f a)
    return R;
 }
 
-Vec3f Vec3f::operator +(float s)
+Vec3f Vec3f::operator +(const float s)const
 {
 	Vec3f R;
 	R.x = this->x + s;
@@ -131,7 +137,7 @@ Vec3f Vec3f::operator +(float s)
    return R;
 }
 
-Vec3f Vec3f::operator -(Vec3f a)
+Vec3f Vec3f::operator -(const Vec3f &a)const
 {
 	Vec3f R;
 	R.x = this->x - a.x;
@@ -141,7 +147,7 @@ Vec3f Vec3f::operator -(Vec3f a)
    return R;
 }
 
-Vec3f Vec3f::operator -(float s)
+Vec3f Vec3f::operator -(const float s)const
 {
 	Vec3f R;
 	R.x = this->x - s;
@@ -150,7 +156,7 @@ Vec3f Vec3f::operator -(float s)
 
    return R;
 }
-Vec3f Vec3f::operator *(Vec3f a)
+Vec3f Vec3f::operator *(const Vec3f &a)const
 {
 	Vec3f R;
 	R.x = this->x * a.x;
@@ -160,7 +166,7 @@ Vec3f Vec3f::operator *(Vec3f a)
 	return R;
 }
 
-Vec3f Vec3f::operator *(float s)
+Vec3f Vec3f::operator *(const float s)const
 {
 	Vec3f R;
 	R.x = this->x * s;
@@ -171,7 +177,7 @@ Vec3f Vec3f::operator *(float s)
 }
 
 
-Vec3f Vec3f::operator /(float s)
+Vec3f Vec3f::operator /(const float s)const
 {
 	Vec3f R;
 	R.x = this->x / s;

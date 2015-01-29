@@ -32,7 +32,7 @@ Vec2f::Vec2f(float a, float b) // create a vector from 2 numbers a,b our vector 
 	y = b;
 }
 
-Vec2f::Vec2f(Vec2f &v) // create a vector from an othher vector
+Vec2f::Vec2f(const Vec2f &v) // create a vector from an othher vector
 {
 	x = v.x;
 	y = v.y;
@@ -50,7 +50,7 @@ Vec2f::~Vec2f()
  ****************************************************************/
 
 
-float Vec2f::getX()
+float Vec2f::getX() const
 {
 	return this->x;
 }
@@ -60,7 +60,7 @@ void Vec2f::setX(float s)
 	 this->x  =  s;
 }
 
-float Vec2f::getY()
+float Vec2f::getY() const
 {
 	return this->y;
 }
@@ -91,6 +91,12 @@ float& Vec2f::operator [] (int i)
 	return *(&x + i);
 }
 
+const float Vec2f::operator [] (int i)const
+{
+	assert(i >= 0); // make sure everthing is ok with indexing
+	return *(&x + i);
+}
+
 Vec2f Vec2f::operator -() const
 {
 	Vec2f Nigative(-x,-y);
@@ -98,7 +104,7 @@ Vec2f Vec2f::operator -() const
 	return Nigative;
 }
 
-Vec2f Vec2f::operator +(Vec2f a)
+Vec2f Vec2f::operator +(const Vec2f &a)const
 {
 	Vec2f R;
 	R.x = this->x + a.x;
@@ -107,7 +113,7 @@ Vec2f Vec2f::operator +(Vec2f a)
    return R;
 }
 
-Vec2f Vec2f::operator +(float s)
+Vec2f Vec2f::operator +(const float s)const
 {
 	Vec2f R;
 	R.x = this->x + s;
@@ -116,7 +122,7 @@ Vec2f Vec2f::operator +(float s)
    return R;
 }
 
-Vec2f Vec2f::operator -(Vec2f a)
+Vec2f Vec2f::operator -(const Vec2f &a)const
 {
 	Vec2f R;
 	R.x = this->x - a.x;
@@ -125,7 +131,7 @@ Vec2f Vec2f::operator -(Vec2f a)
    return R;
 }
 
-Vec2f Vec2f::operator -(float s)
+Vec2f Vec2f::operator -(const float s)const
 {
 	Vec2f R;
 	R.x = this->x - s;
@@ -133,7 +139,7 @@ Vec2f Vec2f::operator -(float s)
 
    return R;
 }
-Vec2f Vec2f::operator *(Vec2f a)
+Vec2f Vec2f::operator *(const Vec2f &a)const
 {
 	Vec2f R;
 	R.x = this->x * a.x;
@@ -142,7 +148,7 @@ Vec2f Vec2f::operator *(Vec2f a)
 	return R;
 }
 
-Vec2f Vec2f::operator *(float s)
+Vec2f Vec2f::operator *(const float s)const
 {
 	Vec2f R;
 	R.x = this->x * s;
@@ -152,7 +158,7 @@ Vec2f Vec2f::operator *(float s)
 }
 
 
-Vec2f Vec2f::operator /(float s)
+Vec2f Vec2f::operator /(const float s)const
 {
 	Vec2f R;
 	R.x = this->x / s;

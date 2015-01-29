@@ -96,7 +96,7 @@ namespace RP
 
 	}
 
-	Mat4x4::Mat4x4(Vec4f v1, Vec4f v2, Vec4f v3,Vec4f v4)
+	Mat4x4::Mat4x4(const Vec4f &v1,const  Vec4f &v2,const Vec4f &v3,const Vec4f &v4)
 	{
 		data[0][0] =  v1[0]; // first line row
 		data[0][1] =  v1[1];
@@ -139,7 +139,15 @@ namespace RP
 		return data[i][j];
 	}
 
-	Mat4x4 Mat4x4::operator +(Mat4x4 b)
+	const float& Mat4x4::operator () (int i,int j)const
+	{
+
+		assert(i >= 0 ||  j >= 0); // make sure that the indices are not nigative controling x')
+		//make sure to check also if i and j are less than 4
+		return data[i][j];
+	}
+
+	Mat4x4 Mat4x4::operator +(const Mat4x4 &b)const
 	{
 		Mat4x4 R;
 		R(0,0) = this->data[0][0] + b(0,0);
@@ -165,7 +173,7 @@ namespace RP
 		return R;
 	}
 
-	Mat4x4 Mat4x4::operator -(Mat4x4 b)
+	Mat4x4 Mat4x4::operator -(const Mat4x4 &b)const
 	{
 		Mat4x4 R;
 		R(0,0) = this->data[0][0] - b(0,0);
@@ -191,7 +199,7 @@ namespace RP
 		return R;
 	}
 
-	Mat4x4 Mat4x4::operator *(float s)
+	Mat4x4 Mat4x4::operator *(const float s)const
 	{
 		Mat4x4 R;
 		R(0,0) = this->data[0][0] * s;
@@ -217,7 +225,7 @@ namespace RP
 		return R;
 	}
 
-	Mat4x4 Mat4x4::operator *(Mat4x4 m) // the matrix-matrix multiplication
+	Mat4x4 Mat4x4::operator *(const Mat4x4 &m)const // the matrix-matrix multiplication
 	{
 		Mat4x4 R(0.0); // intialize a matrix with 0
 
@@ -235,7 +243,7 @@ namespace RP
 		return R;
 	}
 
-	Vec4f Mat4x4::operator *(Vec4f v)
+	Vec4f Mat4x4::operator *(const Vec4f &v)const
 	{
 		Vec4f w(0.0);
 
@@ -288,6 +296,7 @@ namespace RP
 					}
 					//we have lane swap so the determna shoud change it's singe
 					swap = swap * -1;
+
 				}
 				float L = this->data[i][k] / this->data[k][k];
 
@@ -295,6 +304,19 @@ namespace RP
 				{
 					this->data[i][j] = this->data[i][j] - (L * this->data[k][j]);
 				}
+			}
+		}
+
+		// on case somthing goes wrong put down the no  number value to zeros example
+		// when we try to have the triangler matrix of A (1...16) there wil be a line full of
+		//zeroes that mean no metter what you do no there will be alwz division by zero so we put the wrong value to zero and rest in peace XD
+
+		for(int i = 0; i < 4; i++)
+		{
+			for(int j = 0; j < 4; j++)
+			{
+				if(isnan(this->data[i][j]))
+					this->data[i][j] = 0.0;
 			}
 		}
 
@@ -340,7 +362,7 @@ namespace RP
 
 				 return Inver;
 		  }
-
+		 // return matrix of zeros if there is no  inverse == determinant = 0
 		 return 0;
 	}
 

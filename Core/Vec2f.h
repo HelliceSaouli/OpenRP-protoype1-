@@ -36,7 +36,7 @@ namespace RP
 			Vec2f();
 			Vec2f(float);
 			Vec2f(float,float);
-			Vec2f(Vec2f& v);
+			Vec2f(const Vec2f& v);
 			virtual ~Vec2f();
 
 			/*****************************************************************
@@ -49,9 +49,9 @@ namespace RP
 			 *
 			 ****************************************************************/
 
-			float getX();
+			float getX() const;
 			void  setX(float);
-			float getY();
+			float getY() const ;
 			void  setY(float);
 			void  Ones();
 			void  Zeros();
@@ -59,19 +59,27 @@ namespace RP
 			/****************************************************************
 			 * Overloading oprators
 			 ***************************************************************/
-
+			const float operator [] (int i)const;
 			float& operator [] (int i); // Indexing operator so we can use  this Vec2f V ; V[i] = ? ;
 			Vec2f  operator -() const; //  calculating the nigative vector if you have v(1,2) than -v(-1,-2)
-			Vec2f  operator +(Vec2f); // Add 2 vector v1 + v2
-			Vec2f  operator +(float);// Add a scalar to the vector v1 + s
+			Vec2f  operator +(const Vec2f&) const; // Add 2 vector v1 + v2
+			Vec2f  operator +(const float)  const;// Add a scalar to the vector v1 + s
 
-			Vec2f  operator *(Vec2f); // multi 2 vector v1 * v2
-			Vec2f  operator *(float);//  multi a scalar to the vector v1 * s
+			Vec2f  operator *(const Vec2f&) const; // multi 2 vector v1 * v2
+			Vec2f  operator *(const float)  const;//  multi a scalar to the vector v1 * s
 
-			Vec2f  operator /(float);  // divde some Vector by some scalar s or  just multi it by 1/s
+			Vec2f  operator /(const float)  const;  // divde some Vector by some scalar s or  just multi it by 1/s
 
-			Vec2f  operator -(Vec2f); // Sub 2 vector v1 - v2
-			Vec2f  operator -(float);//  Sub a scalar to the vector v1 - s
+			Vec2f  operator -(const Vec2f&) const; // Sub 2 vector v1 - v2
+			Vec2f  operator -(const float)  const;//  Sub a scalar to the vector v1 - s
+
+			 /**************************************************************
+			  * some out put function just to ease debuging                *
+			  **************************************************************/
+			 friend ostream& operator << (ostream& Output, const Vec2f& v)
+			 {
+				 return (Output << " X = " << v.x << ",Y = " << v.y << endl);
+			 }
 	};
 
 
@@ -82,22 +90,22 @@ namespace RP
 	 ****************************************************************/
 
 	inline
-	float Dot(Vec2f u,Vec2f v) // dot production
+	float Dot(const Vec2f &u,const Vec2f &v) // dot production
 	{
-		return (u.getX() * v.getX() + u.getY() * v.getY());
+		float  dot = (u.getX() * v.getX() + u.getY() * v.getY());
+		return dot;
 	}
 
 	inline
-	float Length(Vec2f v)	// calculate the lenth using sqrt and the dot product
+	float Length(const Vec2f &v)	// calculate the lenth using sqrt and the dot product
 	{
 		return sqrt(Dot(v,v));
 	}
 
 	inline
-	Vec2f Normalize(Vec2f v) 		// Elements of vector divide by the Length
+	Vec2f Normalize(const Vec2f &v) 		// Elements of vector divide by the Length
 	{
 		Vec2f NormalizedV;
-
 		NormalizedV.setX(v.getX() /  Length(v));
 		NormalizedV.setY(v.getY() /  Length(v));
 

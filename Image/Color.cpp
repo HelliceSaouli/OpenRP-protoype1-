@@ -74,7 +74,7 @@ namespace RP
 		this->a = Alpha;
 	}
 
-	Color::Color(Vec3f RGB, float Alpha)
+	Color::Color(const Vec3f &RGB, float Alpha)
 	{
 		this->r = RGB[0];
 		this->g = RGB[1]; // i could use the getter function in vector  RGB.getX()
@@ -83,7 +83,7 @@ namespace RP
 		this->a = Alpha;
 	}
 
-	Color::Color(Vec4f RGBA)
+	Color::Color(const Vec4f &RGBA)
 	{
 		this->r = RGBA[0];
 		this->g = RGBA[1];
@@ -92,7 +92,7 @@ namespace RP
 		this->a = RGBA[3];
 	}
 
-	Color::Color(Color &color)
+	Color::Color(const Color &color)
 	{
 		this->r = color.r;
 		this->g = color.g;
@@ -120,7 +120,7 @@ namespace RP
 		this->a = a;
 	}
 
-	Vec4f Color::get() // return a vector that contain the color
+	Vec4f Color::get()const // return a vector that contain the color
 	{
 		Vec4f RGBA;
 		RGBA[0] = this->r;
@@ -165,7 +165,7 @@ namespace RP
 	 * we wanna add some color to each othere or substruct or scal *
 	 * it                                                          *
 	 ***************************************************************/
-	 Color Color::operator +(float Value)
+	 Color Color::operator +(const float Value)const
 	 {
 		 Color Result;
 
@@ -179,7 +179,7 @@ namespace RP
 		  return Result;
 	 }
 
-	 Color Color::operator -(float Value)
+	 Color Color::operator -(const float Value)const
 	 {
 		 Color Result;
 
@@ -193,7 +193,7 @@ namespace RP
 		  return Result;
 	 }
 
-	 Color Color::operator *(float Value)
+	 Color Color::operator *(const float Value)const
 	 {
 		 Color Result;
 
@@ -207,7 +207,7 @@ namespace RP
 		  return Result;
 	 }
 
-	 Color Color::operator +(Color color)
+	 Color Color::operator +(const Color &color)const
 	 {
 		 Color Result;
 
@@ -221,7 +221,7 @@ namespace RP
 		  return Result;
 	 }
 
-	 Color Color::operator -(Color color)
+	 Color Color::operator -(const Color &color)const
 	 {
 		 Color Result;
 
@@ -235,7 +235,7 @@ namespace RP
 		  return Result;
 	 }
 
-	 Color Color::operator *(Color color)
+	 Color Color::operator *(const Color &color)const
 	 {
 		 Color Result;
 
@@ -254,12 +254,12 @@ namespace RP
 		 * returns true if the R, G, B and A components are all equal. *
 		 * *************************************************************/
 
-	 bool Color::operator ==(Color color)
+	 bool Color::operator ==(const Color &color)const
 		{
 		 	 return (r == color.r) && (g == color.g) && (b == color.b) && (a == color.a);
 		}
 
-	 bool Color::operator !=(Color color)
+	 bool Color::operator !=(const Color &color)const
 		{
 		  return (r != color.r) || (g != color.g) || (b != color.b) || (a != color.a);
 		}

@@ -61,30 +61,30 @@ namespace RP
 
 
 			/***********************Set functions***************************/
-			void  setFov(float);
-			void  setAspect(float);
-			void  setNear(float);
-			void  setFar(float);
+			void  setFov(const float);
+			void  setAspect(const float);
+			void  setNear(const float);
+			void  setFar(const float);
 
-			void  setOrthobox(Vec2f&,Vec2f&);					// this will set the ortho  box left right top and bottom
+			void  setOrthobox(const Vec2f&,const Vec2f&);					// this will set the ortho  box left right top and bottom
 
-			void  setViewMatrix(Mat4x4&);						// user can set the view matrix by giving it directly one ( could be calclated some where else or readed from file
-			void  setProjectionMatrix(Mat4x4&);					// set up the projection matrix by giving it one directily
-			void  setModelViewProjectionMatrix(Mat4x4&);	    // set up the MVP matrix directly
+			void  setViewMatrix(const Mat4x4&);						// user can set the view matrix by giving it directly one ( could be calclated some where else or readed from file
+			void  setProjectionMatrix(const Mat4x4&);					// set up the projection matrix by giving it one directily
+			void  setModelViewProjectionMatrix(const Mat4x4&);	    // set up the MVP matrix directly
 
-			void  setPosition(Vec4f&);							// the eyes postion in the world
-			void  setPosition(Vec3f&);							// the last element will be 1 if the user dont wanna use vec 4 and put every time 1 at the end of it he can put vec 3 and we do the rest for him
+			void  setPosition(const Vec4f&);							// the eyes postion in the world
+			void  setPosition(const Vec3f&);							// the last element will be 1 if the user dont wanna use vec 4 and put every time 1 at the end of it he can put vec 3 and we do the rest for him
 
-			void  setTarget(Vec4f&);							// this is where the camera is looking
-			void  setTarget(Vec3f&);
+			void  setTarget(const Vec4f&);							// this is where the camera is looking
+			void  setTarget(const Vec3f&);
 
 
 			/***********************Get functions ***************************/
-			float getFov();
-			float getAspect();
-			float getNear();
-			float getFar();
-			Vec4f getOrthobox();								// this will retrun Left righ top and buttom the near and far have there own set and get
+			float getFov()const;
+			float getAspect()const;
+			float getNear()const;
+			float getFar()const;
+			Vec4f getOrthobox()const;								// this will retrun Left righ top and buttom the near and far have there own set and get
 			/*******************************************************************************
 			 *
 			 * so here we need to set up our  coordinate system for the Camera this
@@ -96,22 +96,31 @@ namespace RP
 			 * v: is the Y axis v = w cross u
 			 * t: is the origine
 			 ********************************************************************************/
-			Mat4x4 getViewMatrix();
-			Mat4x4 getProjectionMatrix();
-			Mat4x4 getModelViewProjectionMatrix();
-			Vec4f  getPosition();
-			Vec4f  getTarget();
+			Mat4x4 getViewMatrix()const;
+			Mat4x4 getProjectionMatrix()const;
+			Mat4x4 getModelViewProjectionMatrix()const;
+			Vec4f  getPosition()const;
+			Vec4f  getTarget()const;
 
 
 			/*************************************************************/
 
-			void calculateViewMatrix(Vec4f&);		    // in case u don't have ur Camera view matrix we can calculated here givin the postion,up,and target;
-			void calculatePerpectiveMatrix();	// the prepective projection
-			void calculateOrthoganalMatrix();	// the Orthoganal projection
+			void calculateViewMatrix(const Vec4f&);		    // in case u don't have ur Camera view matrix we can calculated here givin the postion,up,and target;
+			void calculatePerpectiveMatrix();			// the prepective projection
+			void calculateOrthoganalMatrix();			// the Orthoganal projection
 
-			void calculateMVP(Mat4x4&);               // the modelvie projection that map everything from world to screen
+			void calculateMVP(const Mat4x4&);              	 // the modelvie projection that map everything from world to screen
 
+			/*****************************************************************************
+			 *                                                                           *
+			 * this all the function that needed to do transformation betewen coordinats *
+			 *                                                                           *
+			 *****************************************************************************/
+			Vec3f World2Screen(const Vec4f&);				// this will take a point of 3D world and see what pixel will cover the Z  value will be used for Z-buffer test	--Projection
+			Vec4f Screen2World(const Vec3f&);				// this will take a pixel and see where it shoud be in 3D world a z point recommended							--Reprojection
 
+			Vec4f World2Camra(const Vec4f&)const;			  // this will take a 3D point in the world and put it in Camera cordinate system
+			Vec4f Camera2World(const Vec4f&)const;			 //  this do what it said XD
 	};
 
 } /* namespace RP */

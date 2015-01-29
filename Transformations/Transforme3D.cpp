@@ -27,30 +27,29 @@ namespace RP
 	 *                                              *
 	 ************************************************/
 	//1-1 the translation
-	Mat4x4 Transforme3D::translate(float tx,float ty,float tz)
+	Mat4x4 Transforme3D::translate(const float tx,const float ty,const float tz)
 	{
 		Mat4x4 T(RP_MAT4X4_IDENTITY);
 
 		T(0,3) = tx;
 		T(1,3) = ty;
 		T(2,3) = tz;
-
 		return T;
 	}
 
-	Mat4x4 Transforme3D::translate(Vec3f &t)
+	Mat4x4 Transforme3D::translate(const Vec3f &t)
 	{
 		return this->translate(t[0],t[1],t[2]);
 	}
 
-	Mat4x4 Transforme3D::translate(Vec4f &t) // lol it looks the same
+	Mat4x4 Transforme3D::translate(const Vec4f &t) // lol it looks the same
 	{
 		//just ingore the 4th element or mybe i will devide all element by the 4 next time
 		return this->translate(t[0],t[1],t[2]);
 	}
 
 	//1-2 The rotation
-	Mat4x4 Transforme3D::rotation_x(float Angle)
+	Mat4x4 Transforme3D::rotation_x(const float Angle)
 	{
 		// converte to radien
 		float Theta =  DegreeToRad(Angle);
@@ -65,7 +64,7 @@ namespace RP
 		return Rotationx;
 	}
 
-	Mat4x4 Transforme3D::rotation_y(float Angle)
+	Mat4x4 Transforme3D::rotation_y(const float Angle)
 	{
 		// converte to radien
 		float Theta =  DegreeToRad(Angle);
@@ -80,7 +79,7 @@ namespace RP
 		return Rotationy;
 	}
 
-	Mat4x4 Transforme3D::rotation_z(float Angle)
+	Mat4x4 Transforme3D::rotation_z(const float Angle)
 	{
 		// converte to radien
 		float Theta =  DegreeToRad(Angle);
@@ -97,7 +96,7 @@ namespace RP
 
 	//1-3 The Scale
 
-	Mat4x4 Transforme3D::scale(float sx,float sy,float sz)
+	Mat4x4 Transforme3D::scale(const float sx,const float sy,const float sz)
 	{
 
 		Mat4x4 S(RP_MAT4X4_IDENTITY);
@@ -109,14 +108,14 @@ namespace RP
 		return S;
 	}
 
-	Mat4x4 Transforme3D::scale(Vec3f &s)
+	Mat4x4 Transforme3D::scale(const Vec3f &s)
 	{
 		return this->scale(s[0],s[1],s[3]);
 	}
 
 	//1-4 rigid-body transformation
 
-	Mat4x4 Transforme3D::Rigid(Mat3x3 &R, Vec3f &T)
+	Mat4x4 Transforme3D::Rigid(const Mat3x3 &R, const Vec3f &T)
 	{
 
 		Vec4f row1(R(0,0) ,R(0,1) , R(0,2), T[0]);
@@ -136,7 +135,7 @@ namespace RP
 	 ************************************************/
 
 	//2-1 Orthographic Projection
-	Mat4x4 Transforme3D::orthographic(float l,float r,float b,float t,float n,float f)
+	Mat4x4 Transforme3D::orthographic(const float l,const float r,const float b,const float t,const float n,const float f)
 	{
 		Mat4x4 Ortho; // will be insilized all to 0
 
@@ -154,7 +153,7 @@ namespace RP
 		return Ortho;
 	}
 
-	Mat4x4 Transforme3D::orthographic(Vec3f& MinBox, Vec3f& MaxBox)
+	Mat4x4 Transforme3D::orthographic(const Vec3f& MinBox, const Vec3f& MaxBox)
 	{
 		float l = MinBox[0];
 		float r = MaxBox[0];
@@ -199,7 +198,7 @@ namespace RP
                     (always positive).
 
 	 **************************************************************************************************************/
-	Mat4x4 Transforme3D::perspective(float fvoy,float aspect,float zNear, float zFar)
+	Mat4x4 Transforme3D::perspective(const float fvoy,const float aspect,const float zNear, const float zFar)
 	{
 		Mat4x4 Perpective; // will be insilized all to 0
 		float f = cotangent(fvoy / 2);
@@ -213,7 +212,7 @@ namespace RP
 		return Perpective;
 	}
 
-	Mat4x4 Transforme3D::perspective(Vec4f &v)
+	Mat4x4 Transforme3D::perspective(const Vec4f &v)
 	{
 		Mat4x4 Perpective; // will be insilized all to 0
 		float f = cotangent(v[0]);

@@ -41,7 +41,7 @@ namespace RP
 
 				Mat4x4();
 				Mat4x4(float ,float ,float,float, float,float,float,float, float,float,float,float, float,float,float,float);
-				Mat4x4(Vec4f,Vec4f,Vec4f,Vec4f);
+				Mat4x4(const Vec4f&,const Vec4f&,const Vec4f&,const Vec4f&);
 			  //Mat4x4(Vec2f,Vec2f,Vec2f,Vec2f,Vec2f,Vec2f,Vec2f,Vec2f);
 				Mat4x4(float d); // if d = 1 create the identity matrix else create a matrix with the float d
 				virtual ~Mat4x4();
@@ -64,11 +64,21 @@ namespace RP
 				 ***************************************************************/
 
 				float& operator () (int i,int j); // Nice simple way to index wi use to have Matrix M[0][0] now we can just use M(0,0)
-				Mat4x4 operator + (Mat4x4); // this componentwise addition, very similar to vector-vector addition.
-				Mat4x4 operator - (Mat4x4); // this componentwise Subbtraction very similar to vector-vector Subbtraction.
-				Mat4x4 operator * (Mat4x4); // this NOT componentwise multiplication it's the standard multiplication of matrices
-				Mat4x4 operator * (float); // multiplaying the whool matrix  with a floating scalar
-				Vec4f  operator * (Vec4f); // Matrice x Vector usfull in tansformation a lot
+				const float& operator () (int i,int j)const;
+				Mat4x4 operator + (const Mat4x4&)const; // this componentwise addition, very similar to vector-vector addition.
+				Mat4x4 operator - (const Mat4x4&)const; // this componentwise Subbtraction very similar to vector-vector Subbtraction.
+				Mat4x4 operator * (const Mat4x4&)const; // this NOT componentwise multiplication it's the standard multiplication of matrices
+				Mat4x4 operator * (const float)const; // multiplaying the whool matrix  with a floating scalar
+				Vec4f  operator * (const Vec4f&)const; // Matrice x Vector usfull in tansformation a lot
+
+
+				 friend ostream& operator << (ostream& Output, const Mat4x4& v)
+				 {
+					 return (Output <<"M[0][0] = "<< v(0,0) << " M[0][1] = " << v(0,1) <<" M[0][2] = " << v(0,2) <<" M[0][3] = " << v(0,3) << endl
+							        <<"M[1][0] = "<< v(1,0) << " M[1][1] = " << v(1,1) <<" M[1][2] = " << v(1,2) <<" M[1][3] = " << v(1,3) << endl
+							        <<"M[2][0] = "<< v(2,0) << " M[2][1] = " << v(2,1) <<" M[2][2] = " << v(2,2) <<" M[2][3] = " << v(2,3) << endl
+							        <<"M[3][0] = "<< v(3,0) << " M[3][1] = " << v(3,1) <<" M[3][2] = " << v(3,2) <<" M[3][3] = " << v(3,3) << endl);
+				 }
 
 				/****************************************************************
 				 *
@@ -90,7 +100,7 @@ namespace RP
 		 *
 		 ****************************************************************/
 	inline
-	float Tr(Mat4x4 M) // The trace of a matrix, denoted tr(M), is simply the sum of the diagonal elements of a square matrix,
+	float Tr(const Mat4x4 &M) // The trace of a matrix, denoted tr(M), is simply the sum of the diagonal elements of a square matrix,
 	{
 		float trace = 0;
 		trace = M(0,0) + M(1,1) + M(2,2) + M(3,3); // the demantion is 4x4 we dont need  the Computer to do the fun stuff for us X")
@@ -98,7 +108,7 @@ namespace RP
 	}
 
 	inline
-	Mat4x4 MatrixcomponentwiseMul(Mat4x4 a,Mat4x4 b) // this is the componentwise multiplication
+	Mat4x4 MatrixcomponentwiseMul(const Mat4x4 &a,const Mat4x4 &b) // this is the componentwise multiplication
 	{
 		Mat4x4 c;
 

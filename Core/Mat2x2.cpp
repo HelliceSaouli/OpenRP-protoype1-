@@ -17,7 +17,7 @@ namespace RP
  ********************************************************************/
 Mat2x2::Mat2x2()  // this will create a matrix with all zeros
 {
-	Mat2x2(0);
+	//Mat2x2(0); do nothing
 }
 
 Mat2x2::Mat2x2(float m00,float m01, float m10, float m11)
@@ -47,7 +47,7 @@ Mat2x2::Mat2x2(float d) // this is the Identity Matrix
 
 }
 
-Mat2x2::Mat2x2(Vec2f v1, Vec2f v2)
+Mat2x2::Mat2x2(const Vec2f &v1, const Vec2f &v2)
 {
 	data[0][0] =  v1[0]; // first line row
 	data[0][1] =  v1[1];
@@ -66,6 +66,13 @@ Mat2x2::~Mat2x2()
  * Overloading oprators
  ***************************************************************/
 
+const float& Mat2x2::operator () (int i,int j)const
+{
+
+	assert(i >= 0 ||  j >= 0); // make sure that the indices are not nigative controling x')
+	return data[i][j];
+}
+
 float& Mat2x2::operator () (int i,int j)
 {
 
@@ -73,7 +80,7 @@ float& Mat2x2::operator () (int i,int j)
 	return data[i][j];
 }
 
-Mat2x2 Mat2x2::operator +(Mat2x2 b)
+Mat2x2 Mat2x2::operator +(const Mat2x2 &b)const
 {
 	Mat2x2 R;
 	R(0,0) = this->data[0][0] + b(0,0);
@@ -84,7 +91,7 @@ Mat2x2 Mat2x2::operator +(Mat2x2 b)
 	return R;
 }
 
-Mat2x2 Mat2x2::operator -(Mat2x2 b)
+Mat2x2 Mat2x2::operator -(const Mat2x2 &b)const
 {
 	Mat2x2 R;
 	R(0,0) = this->data[0][0] - b(0,0);
@@ -95,7 +102,7 @@ Mat2x2 Mat2x2::operator -(Mat2x2 b)
 	return R;
 }
 
-Mat2x2 Mat2x2::operator *(float s)
+Mat2x2 Mat2x2::operator *(const float s)const
 {
 	Mat2x2 R;
 	R(0,0) = this->data[0][0] * s;
@@ -106,7 +113,7 @@ Mat2x2 Mat2x2::operator *(float s)
 	return R;
 }
 
-Mat2x2 Mat2x2::operator *(Mat2x2 m) // the matrix-matrix multiplication
+Mat2x2 Mat2x2::operator *(const Mat2x2 &m) const// the matrix-matrix multiplication
 {
 	Mat2x2 R(0.0); // intialize a matrix with 0
 
@@ -124,7 +131,7 @@ Mat2x2 Mat2x2::operator *(Mat2x2 m) // the matrix-matrix multiplication
 	return R;
 }
 
-Vec2f Mat2x2::operator *(Vec2f v)
+Vec2f Mat2x2::operator *(const Vec2f &v)const
 {
 	Vec2f w(0.0);
 

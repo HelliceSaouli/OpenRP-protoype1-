@@ -40,7 +40,7 @@ namespace RP
 
 			Mat2x2();
 			Mat2x2(float ,float ,float ,float);
-			Mat2x2(Vec2f,Vec2f);
+			Mat2x2(const Vec2f&,const Vec2f&);
 			Mat2x2(float d); // if d = 1 create the identity matrix else create a matrix with the float d
 			virtual ~Mat2x2();
 
@@ -60,13 +60,13 @@ namespace RP
 			/****************************************************************
 			 * Overloading oprators
 			 ***************************************************************/
-
-			float& operator () (int i,int j); // Nice simple way to index wi use to have Matrix M[0][0] now we can just use M(0,0)
-			Mat2x2 operator + (Mat2x2); // this componentwise addition, very similar to vector-vector addition.
-			Mat2x2 operator - (Mat2x2); // this componentwise Subbtraction very similar to vector-vector Subbtraction.
-			Mat2x2 operator * (Mat2x2); // this NOT componentwise multiplication it's the standard multiplication of matrices
-			Mat2x2 operator * (float); // multiplaying the whool matrix  with a floating scalar
-			Vec2f  operator * (Vec2f);
+			float& operator () (int i,int j); //this is for normal use and to avoid the Lvalue error omg hard c++ the othere is for where there is const arrguments
+		    const float& operator () (int i,int j)const; // Nice simple way to index wi use to have Matrix M[0][0] now we can just use M(0,0)
+			Mat2x2 operator + (const Mat2x2&)const; // this componentwise addition, very similar to vector-vector addition.
+			Mat2x2 operator - (const Mat2x2&)const; // this componentwise Subbtraction very similar to vector-vector Subbtraction.
+			Mat2x2 operator * (const Mat2x2&)const; // this NOT componentwise multiplication it's the standard multiplication of matrices
+			Mat2x2 operator * (const float)const; // multiplaying the whool matrix  with a floating scalar
+			Vec2f  operator * (const Vec2f&)const ;
 
 			/****************************************************************
 			 *
@@ -77,6 +77,12 @@ namespace RP
 			Mat2x2 Inverse(); // calculate it later on
 			float Det(); // Determinant of a Matrix only calculated if we have a squar Matrices M(a,b ; c,d) Det(m) = ad - bc
 
+			 friend ostream& operator << (ostream& Output, const Mat2x2& v)
+			 {
+				 return (Output <<"M[0][0] = "<< v(0,0) << " M[0][1] = " << v(0,1) << endl
+						        <<"M[1][0] = "<< v(1,0) << " M[1][1] = " << v(1,1) << endl);
+			 }
+
 	};
 
 	/****************************************************************
@@ -85,7 +91,7 @@ namespace RP
 	 *
 	 ****************************************************************/
 inline
-float Tr(Mat2x2 M) // The trace of a matrix, denoted tr(M), is simply the sum of the diagonal elements of a square matrix,
+float Tr(const Mat2x2 &M) // The trace of a matrix, denoted tr(M), is simply the sum of the diagonal elements of a square matrix,
 {
 	float trace = 0;
 	trace = M(0,0) + M(1,1); // the demantion is 2x2 we dont need  the Computer to do the fun stuff for us X")
@@ -93,7 +99,7 @@ float Tr(Mat2x2 M) // The trace of a matrix, denoted tr(M), is simply the sum of
 }
 
 inline
-Mat2x2 MatrixcomponentwiseMul(Mat2x2 a,Mat2x2 b) // this is the componentwise multiplication
+Mat2x2 MatrixcomponentwiseMul(const Mat2x2 &a,const Mat2x2 &b) // this is the componentwise multiplication
 {
 	Mat2x2 c;
 

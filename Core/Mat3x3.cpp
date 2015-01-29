@@ -70,7 +70,7 @@ namespace RP
 
 	}
 
-	Mat3x3::Mat3x3(Vec3f v1, Vec3f v2, Vec3f v3)
+	Mat3x3::Mat3x3(const Vec3f &v1,const Vec3f &v2,const Vec3f &v3)
 	{
 		data[0][0] =  v1[0]; // first line row
 		data[0][1] =  v1[1];
@@ -104,7 +104,14 @@ namespace RP
 		return data[i][j];
 	}
 
-	Mat3x3 Mat3x3::operator +(Mat3x3 b)
+	const float& Mat3x3::operator () (int i,int j)const
+	{
+
+		assert(i >= 0 ||  j >= 0); // make sure that the indices are not nigative controling x')
+		return data[i][j];
+	}
+
+	Mat3x3 Mat3x3::operator +(const Mat3x3 &b)const
 	{
 		Mat3x3 R;
 		R(0,0) = this->data[0][0] + b(0,0);
@@ -122,7 +129,7 @@ namespace RP
 		return R;
 	}
 
-	Mat3x3 Mat3x3::operator -(Mat3x3 b)
+	Mat3x3 Mat3x3::operator -(const Mat3x3 &b)const
 	{
 		Mat3x3 R;
 		R(0,0) = this->data[0][0] - b(0,0);
@@ -140,7 +147,7 @@ namespace RP
 		return R;
 	}
 
-	Mat3x3 Mat3x3::operator *(float s)
+	Mat3x3 Mat3x3::operator *(const float s)const
 	{
 		Mat3x3 R;
 		R(0,0) = this->data[0][0] * s;
@@ -158,7 +165,7 @@ namespace RP
 		return R;
 	}
 
-	Mat3x3 Mat3x3::operator *(Mat3x3 m) // the matrix-matrix multiplication
+	Mat3x3 Mat3x3::operator *(const Mat3x3 &m)const // the matrix-matrix multiplication
 	{
 		Mat3x3 R(0.0); // intialize a matrix with 0
 
@@ -176,7 +183,7 @@ namespace RP
 		return R;
 	}
 
-	Vec3f Mat3x3::operator *(Vec3f v)
+	Vec3f Mat3x3::operator *(const Vec3f &v)const
 	{
 		Vec3f w(0.0);
 
@@ -241,6 +248,8 @@ namespace RP
 
 			 return Inver;
 		}
+
+		 // return matrix of zeros if there is no  inverse == determinant = 0
 		return 0;
 	}
 

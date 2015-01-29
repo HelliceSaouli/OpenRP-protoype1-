@@ -36,7 +36,7 @@ Vec4f::Vec4f(float a, float b,float c,float d) // create a vector from 2 numbers
 	w = d;
 }
 
-Vec4f::Vec4f(Vec4f &v) // create a vector from an othher vector
+Vec4f::Vec4f(const Vec4f &v) // create a vector from an othher vector
 {
 	x = v.x;
 	y = v.y;
@@ -56,7 +56,7 @@ Vec4f::~Vec4f()
  ****************************************************************/
 
 
-float Vec4f::getX()
+float Vec4f::getX() const
 {
 	return this->x;
 }
@@ -66,7 +66,7 @@ void Vec4f::setX(float s)
 	 this->x  =  s;
 }
 
-float Vec4f::getY()
+float Vec4f::getY() const
 {
 	return this->y;
 }
@@ -76,7 +76,7 @@ void Vec4f::setY(float s)
 	this->y = s;
 }
 
-float Vec4f::getZ()
+float Vec4f::getZ() const
 {
 	return this->z;
 }
@@ -86,7 +86,7 @@ void Vec4f::setZ(float s)
 	this->z = s;
 }
 
-float Vec4f::getW()
+float Vec4f::getW() const
 {
 	return this->w;
 }
@@ -114,6 +114,12 @@ void Vec4f::Zeros()
  * Overloading oprators
  ***************************************************************/
 
+const float Vec4f::operator [] (int i)const
+{
+	assert(i >= 0); // make sure everthing is ok with indexing
+	return *(&x + i);
+}
+
 float& Vec4f::operator [] (int i)
 {
 	assert(i >= 0); // make sure everthing is ok with indexing
@@ -127,7 +133,7 @@ Vec4f Vec4f::operator -() const
 	return Nigative;
 }
 
-Vec4f Vec4f::operator +(Vec4f a)
+Vec4f Vec4f::operator +(const Vec4f &a) const
 {
 	Vec4f R;
 	R.x = this->x + a.x;
@@ -138,7 +144,7 @@ Vec4f Vec4f::operator +(Vec4f a)
    return R;
 }
 
-Vec4f Vec4f::operator +(float s)
+Vec4f Vec4f::operator +(const float s) const
 {
 	Vec4f R;
 	R.x = this->x + s;
@@ -148,18 +154,18 @@ Vec4f Vec4f::operator +(float s)
    return R;
 }
 
-Vec4f Vec4f::operator -(Vec4f a)
+Vec4f Vec4f::operator -(const Vec4f &a)const
 {
 	Vec4f R;
 	R.x = this->x - a.x;
 	R.y = this->y - a.y;
 	R.z = this->z - a.z;
-	R.w = this->w - a.z;
+	R.w = this->w - a.w;
 
    return R;
 }
 
-Vec4f Vec4f::operator -(float s)
+Vec4f Vec4f::operator -(const float s)const
 {
 	Vec4f R;
 	R.x = this->x - s;
@@ -169,18 +175,18 @@ Vec4f Vec4f::operator -(float s)
 
    return R;
 }
-Vec4f Vec4f::operator *(Vec4f a)
+Vec4f Vec4f::operator *(const Vec4f &a)const
 {
 	Vec4f R;
 	R.x = this->x * a.x;
 	R.y = this->y * a.y;
 	R.z = this->z * a.z;
-	R.w = this->w * a.z;
+	R.w = this->w * a.w;
 
 	return R;
 }
 
-Vec4f Vec4f::operator *(float s)
+Vec4f Vec4f::operator *(const float s)const
 {
 	Vec4f R;
 	R.x = this->x * s;
@@ -192,7 +198,7 @@ Vec4f Vec4f::operator *(float s)
 }
 
 
-Vec4f Vec4f::operator /(float s)
+Vec4f Vec4f::operator /(const float s) const
 {
 	Vec4f R;
 	R.x = this->x / s;

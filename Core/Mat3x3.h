@@ -41,7 +41,7 @@ namespace RP
 
 				Mat3x3();
 				Mat3x3(float ,float ,float ,float,float,float,float,float,float);
-				Mat3x3(Vec3f,Vec3f,Vec3f);
+				Mat3x3(const Vec3f&, const Vec3f&,const Vec3f&);
 				Mat3x3(float d); // if d = 1 create the identity matrix else create a matrix with the float d
 				virtual ~Mat3x3();
 
@@ -63,17 +63,25 @@ namespace RP
 				 ***************************************************************/
 
 				float& operator () (int i,int j); // Nice simple way to index wi use to have Matrix M[0][0] now we can just use M(0,0)
-				Mat3x3 operator + (Mat3x3); // this componentwise addition, very similar to vector-vector addition.
-				Mat3x3 operator - (Mat3x3); // this componentwise Subbtraction very similar to vector-vector Subbtraction.
-				Mat3x3 operator * (Mat3x3); // this NOT componentwise multiplication it's the standard multiplication of matrices
-				Mat3x3 operator * (float); // multiplaying the whool matrix  with a floating scalar
-				Vec3f  operator * (Vec3f);
+				const float&  operator () (int i,int j)const;
+				Mat3x3 operator + (const Mat3x3&)const; // this componentwise addition, very similar to vector-vector addition.
+				Mat3x3 operator - (const Mat3x3&)const; // this componentwise Subbtraction very similar to vector-vector Subbtraction.
+				Mat3x3 operator * (const Mat3x3&)const; // this NOT componentwise multiplication it's the standard multiplication of matrices
+				Mat3x3 operator * (const float)const; // multiplaying the whool matrix  with a floating scalar
+				Vec3f  operator * (const Vec3f&)const;
 
 				/****************************************************************
 				 *
 				 * Some usefull function
 				 *
 				 ****************************************************************/
+
+				 friend ostream& operator << (ostream& Output, const Mat3x3& v)
+				 {
+					 return (Output <<"M[0][0] = "<< v(0,0) << " M[0][1] = " << v(0,1) <<" M[0][2] = " << v(0,2) << endl
+							        <<"M[1][0] = "<< v(1,0) << " M[1][1] = " << v(1,1) <<" M[1][2] = " << v(1,2) << endl
+							        <<"M[2][0] = "<< v(2,0) << " M[2][1] = " << v(2,1) <<" M[2][2] = " << v(2,2) << endl);
+				 }
 				Mat3x3 Transpose(); // this is the transpose of Matrice where rows will be colones and so the coulons will be rows
 				Mat3x3 Inverse(); // calculate it later on
 				Mat3x3 Adjoints(); // usful for calclating Inverse and other stuff
@@ -87,7 +95,7 @@ namespace RP
 		 *
 		 ****************************************************************/
 	inline
-	float Tr(Mat3x3 M) // The trace of a matrix, denoted tr(M), is simply the sum of the diagonal elements of a square matrix,
+	float Tr(const Mat3x3 &M) // The trace of a matrix, denoted tr(M), is simply the sum of the diagonal elements of a square matrix,
 	{
 		float trace = 0;
 		trace = M(0,0) + M(1,1) + M(2,2); // the demantion is 3x3 we dont need  the Computer to do the fun stuff for us X")
@@ -95,7 +103,7 @@ namespace RP
 	}
 
 	inline
-	Mat3x3 MatrixcomponentwiseMul(Mat3x3 a,Mat3x3 b) // this is the componentwise multiplication
+	Mat3x3 MatrixcomponentwiseMul(const Mat3x3 &a,const Mat3x3 &b) // this is the componentwise multiplication
 	{
 		Mat3x3 c;
 

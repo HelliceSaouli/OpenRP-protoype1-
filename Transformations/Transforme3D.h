@@ -52,21 +52,21 @@ namespace RP
 
 			//1-1 the translation : A change from one location to another is represented by a translation matrix, T.
 
-			Mat4x4 translate(float,float,float); // give it the position we wanna translate too as suprate  numbers
-			Mat4x4 translate(Vec4f&); 	        //  give it the position as vector 4 (augmeted vector (x,y,z,1) if your last element was not a 1 the function will ignorte any way
-			Mat4x4 translate(Vec3f&);			//  give it the postion simply as vector 3
+			Mat4x4 translate(const float,const float,const float); // give it the position we wanna translate too as suprate  numbers
+			Mat4x4 translate(const Vec4f&); 	        //  give it the position as vector 4 (augmeted vector (x,y,z,1) if your last element was not a 1 the function will ignorte any way
+			Mat4x4 translate(const Vec3f&);			//  give it the postion simply as vector 3
 
 			//1-2 The rotation : A rotation transform rotates a vector (position or direction) by a given angle around a given axis passing through the origin.
-			Mat4x4 rotation_x(float);          // rotation around the x axis with angle O in radian
-			Mat4x4 rotation_y(float);          // rotation around the y axis with angle O in radian
-			Mat4x4 rotation_z(float);          // rotation around the z axis with angle O in radian
+			Mat4x4 rotation_x(const float);          // rotation around the x axis with angle O in radian
+			Mat4x4 rotation_y(const float);          // rotation around the y axis with angle O in radian
+			Mat4x4 rotation_z(const float);          // rotation around the z axis with angle O in radian
 
 			//1-3 The Scale : scales an entity with factors sx, sy,and sz along the x-, y-, and z- directions respectively.
-			Mat4x4 scale(float,float,float);
-			Mat4x4 scale(Vec3f&);
+			Mat4x4 scale(const float,const float,const float);
+			Mat4x4 scale(const Vec3f&);
 
 			//1-4 rigid-body transformation : this transformation is the fusion of 2 in one matrix ( translation than rotation)
-			Mat4x4 Rigid(Mat3x3&,Vec3f&); 		// we will give it the  3x3 rotation matrix R and the vector 3 T of translation
+			Mat4x4 Rigid(const Mat3x3&,const Vec3f&); 		// we will give it the  3x3 rotation matrix R and the vector 3 T of translation
 
 			//1-5 Affine transformation : need to have a 3x4 matrice i dont have right now so next time i will add it
 			/************************************************
@@ -76,14 +76,14 @@ namespace RP
 			 ************************************************/
 
 			//2-1 Orthographic Projection A characteristic of an orthographic projection is that parallel lines remain parallel after the projection.
-			Mat4x4 orthographic(float,float,float ,float,float,float); // (l, r, b, t, n, f), denoting the left, right, bottom, top, near, and far planes
-			Mat4x4 orthographic(Vec3f&,Vec3f&); 					   // AABB (Axis-Aligned Bounding Box) where the first vector 3 is (l,b,n) and the scend is (r,t,f)
+			Mat4x4 orthographic(const float,const float,const float ,const float,const float,const float); // (l, r, b, t, n, f), denoting the left, right, bottom, top, near, and far planes
+			Mat4x4 orthographic(const Vec3f&,const Vec3f&); 					   // AABB (Axis-Aligned Bounding Box) where the first vector 3 is (l,b,n) and the scend is (r,t,f)
 
 			//2-2 Perspective Projection : which is used in the majority of computer graphics applications. Here, parallel lines are generally not parallel after projection;
 			//rather, they may converge to a single point at their extreme.
 
-			Mat4x4 perspective(float,float,float,float); // this  4 element are the angle,the aspect ratio, the near and the far
-			Mat4x4 perspective(Vec4f&);					// the same top parametre but htey are giving in form of vector 4
+			Mat4x4 perspective(const float,const float,const float,const float); // this  4 element are the angle,the aspect ratio, the near and the far
+			Mat4x4 perspective(const Vec4f&);					// the same top parametre but htey are giving in form of vector 4
 
 			/******************************************************************
 			 *                                                                *

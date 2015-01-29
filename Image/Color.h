@@ -77,9 +77,9 @@ namespace RP
 
 			Color();
 			Color(float,float,float,float); // for deferent floats range beteween 0-1
-			Color(Vec4f); // we can create a color by passing to it a vector 4 of floats
-			Color(Vec3f,float); // we can create a color by passing to it a vector 3 of floats and alpha value
-			Color(Color&); //create a color with othere color
+			Color(const Vec4f&); // we can create a color by passing to it a vector 4 of floats
+			Color(const Vec3f&,float); // we can create a color by passing to it a vector 3 of floats and alpha value
+			Color(const Color&); //create a color with othere color
 			virtual ~Color();
 
 			/*****************************************************************
@@ -88,28 +88,28 @@ namespace RP
 		     *****************************************************************/
 
 			void  set(float,float,float,float); // use this to set the color after all the RGB are privats and we need setter and getter
-			Vec4f get(); // get the color and save it in vector of 4 floats
+			Vec4f get()const; // get the color and save it in vector of 4 floats
 
 
 			/***************************************************************
 			 * Overloading oprators                                        *
 			 ***************************************************************/
 
-			Color operator + (float);
-			Color operator + (Color);
+			Color operator + (const float)const;
+			Color operator + (const Color&)const;
 
-			Color operator - (float);
-			Color operator - (Color);
+			Color operator - (const float)const;
+			Color operator - (const Color&)const;
 
-			Color operator * (float);
-			Color operator * (Color);
+			Color operator * (const float)const;
+			Color operator * (const Color&)const ;
 
 			/***************************************************************
 			 * Test two colors for equality                                *
 			 * returns true if the R, G, B and A components are all equal. *
 			 * *************************************************************/
-			 bool operator == (Color);
-			 bool operator != (Color);
+			 bool operator == (const Color&)const;
+			 bool operator != (const Color&)const;
 
 			 /**************************************************************
 			  * some out put function just to ease debuging                *
@@ -133,12 +133,12 @@ namespace RP
 	 *
 	 ***************************************************************/
 	inline
-	Color Lerping(float t,Color A,Color B) // c(t) = (1 − t)c 1 + tc 2 ,t ∈ [0, 1] linear interpolation
+	Color Lerping(float t,const Color &A,const Color &B) // c(t) = (1 − t)c 1 + tc 2 ,t ∈ [0, 1] linear interpolation
 	{
 		Color InterpolatedColor; // this a reslut of the lerping
 
 		float inverT = 1 - t ;
-		float r = inverT * A.get()[0] +  t * B.get()[0]; // out of the classe we should se our setters and getters
+		float r = inverT * A.get()[0] +  t * B.get()[0]; // out of the classe we should use our setters and getters
 		float g = inverT * A.get()[1] +  t * B.get()[1];
 		float b = inverT * A.get()[2] +  t * B.get()[2];
 		float a = inverT * A.get()[3] +  t * B.get()[3];
