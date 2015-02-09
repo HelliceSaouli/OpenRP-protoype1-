@@ -33,8 +33,13 @@ class Objects
 		virtual ~Objects();
 		virtual float intersection(const Ray&);
 		virtual Color ObjectColor();
-		virtual Vec4f ObjectNormal();
+		virtual Vec4f ObjectNormal_at(const Vec4f&)const;
+		// this will be changeed since we are going to add matriel clkasse later on
+		virtual Color getKa()const;
+		virtual Color getKs()const;
+		virtual Color getKd()const;
 
+		virtual bool isShining();
 		void setObjectID(int);
 		int  getObjectID();
 	};

@@ -15,6 +15,7 @@ namespace RP
 		this->Origine = Vec4f(0.0,0.0,0.0,1.0);
 		this->raduis  = 1.0;
 		this->color   = Color::red;
+		this->Ks   = Color::black;
 	}
 
 	Sphere::Sphere(const Vec4f &o, float r, const Color &c)
@@ -22,6 +23,7 @@ namespace RP
 		this->Origine = o;
 		this->raduis  = r;
 		this->color   = c;
+		this->Ks   = Color::black;
 	}
 
 	Sphere::~Sphere()
@@ -49,6 +51,55 @@ namespace RP
 		return this->color;
 	}
 
+	Vec4f Sphere::ObjectNormal_at(const Vec4f &point)const
+	{
+
+		// since it's sphere than every point in it has  it's own normal
+		// that normal is simply the extention of line betewen the center
+		// and the point
+
+		Vec4f Normal = Normalize(point - this->Origine);
+		return Normal;
+	}
+
+    void Sphere::setKa(const Color ka)
+	   {
+		   this->Ka = ka;
+	   }
+
+	void Sphere::setKs(const Color ks)
+	   {
+		   this->Ks = ks;
+	   }
+
+   void Sphere::setKd(const Color kd)
+	   {
+		   this->Kd = kd;
+	   }
+
+    Color Sphere::getKa()const
+	   {
+		   return this->Ka;
+	   }
+
+	Color Sphere::getKs()const
+	   {
+		   return this->Ks;
+	   }
+
+   Color Sphere::getKd()const
+	   {
+		   return this->Kd;
+	   }
+
+   bool Sphere::isShining()
+   {
+ 	  if (this->Ks == Color::black)
+ 		  return false;
+ 	  else
+ 		  return true;
+   }
+
 	float Sphere::intersection(const Ray &ray)
 	{
 
@@ -74,31 +125,20 @@ namespace RP
 		}
 		else
 		{
-			if(Delta  == 0)
+			if(Delta  >= 0)
 			{
-				//there is one solution -b/2a
-				float t = - B / (2* A);
+				float t0 = (-B - sqrt(Delta)) / (2 * A);
+				float t1 = (-B + sqrt(Delta)) / (2 * A);
+
+				float t = MIN(t0,t1); // i don't know it's suppose to be min here but when i use min it render wrong
 				if(t > 0)
-				  return t;
-				else
-					return NAN;
-			}
-			else
-			{
-				// there is 2 solution return the min
-
-				float a = (-B + sqrt(Delta)) / (2 * A);
-				float b = (-B - sqrt(Delta)) / (2 * A);
-
-				float t = MAX(a,b);
-
-				if(t > 0)
-				  return t;
-				else
-					return NAN; //intersection bihind the camera
-				return t;
+				{
+					return t;
+				}
 			}
 		}
+
+		return NAN;
 	}
 
 } /* namespace RP */

@@ -26,14 +26,28 @@ namespace RP
 			float raduis;
 			Color color;
 
+			//some matrials next time it will be a full structur
+			Color Ka,Kd,Ks;
+
 		public:
 			Sphere();
 			Sphere(const Vec4f&,float ,const Color&);
 			virtual ~Sphere();
 			virtual float intersection(const Ray&);
 			virtual Color ObjectColor();
+			virtual Vec4f ObjectNormal_at(const Vec4f&)const;
 
+			virtual Color getKa()const;
+			virtual Color getKs()const;
+			virtual Color getKd()const;
+
+			virtual bool isShining();
 			void  setOrigine(const Vec4f&);
+
+			void  setKs(const Color);
+			void  setKa(const Color);
+			void  setKd(const Color);
+
 			Vec4f getOrigine()const;
 			float getRaduis()const;
 	};

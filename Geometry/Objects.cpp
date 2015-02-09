@@ -31,7 +31,7 @@ namespace RP
 		return Color::black;
 	}
 
-	Vec4f Objects::ObjectNormal()
+	Vec4f Objects::ObjectNormal_at(const Vec4f&)const
 	{
 		return Vec4f(0.0,1.0,0.0,0.0);
 	}
@@ -45,5 +45,25 @@ namespace RP
 	{
 		return this->objectID;
 	}
+
+   Color Objects::getKa()const
+   {
+	   return Color::black;
+   }
+
+   Color Objects::getKs()const
+   {
+	   return Color::black;
+   }
+
+   Color Objects::getKd()const
+   {
+	   return Color::black;
+   }
+
+   bool Objects::isShining()
+   {
+	   return false;
+   }
 
 } /* namespace RP */

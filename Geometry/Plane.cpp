@@ -15,6 +15,7 @@ namespace RP
 		this->position = Vec4f(0.0,0.0,0.0,1.0);
 		this->normal   = Vec4f(0.0,1.0,0.0,0.0);
 		this->color    = Color::white;
+		this->Ks	   = Color::black;
 	}
 
 	Plane::Plane(const Vec4f &p, const Vec4f &n, const Color &c) // simple constractor takes a postion and normal vector
@@ -22,6 +23,7 @@ namespace RP
 		this->position = p;
 		this->normal   = n;
 		this->color    = c;
+		this->Ks       = Color::black;
 
 	}
 
@@ -59,6 +61,51 @@ namespace RP
    {
 	   return this->color;
    }
+
+   Vec4f Plane::ObjectNormal_at(const Vec4f &point)const
+   {
+	   //since it's a plane than every point had the same normal as the plane normal so we are returning the plane normal
+	   return this->normal;
+   }
+
+
+   void Plane::setKa(const Color ka)
+	   {
+		   this->Ka = ka;
+	   }
+
+	void Plane::setKs(const Color ks)
+	   {
+		   this->Ks = ks;
+	   }
+
+  void Plane::setKd(const Color kd)
+	   {
+		   this->Kd = kd;
+	   }
+
+  Color Plane::getKa()const
+	   {
+		   return this->Ka;
+	   }
+
+  Color Plane::getKs()const
+	   {
+		   return this->Ks;
+	   }
+
+  Color Plane::getKd()const
+	   {
+		   return this->Kd;
+	   }
+  bool Plane::isShining()
+  {
+	  if (this->Ks == Color::black)
+		  return false;
+	  else
+		  return true;
+  }
+
 
    /***************************************************
     * most fun par is here XD the god dm intersection *

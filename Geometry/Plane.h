@@ -29,6 +29,8 @@ namespace RP
 			Vec4f position;
 			Vec4f normal; // every point of the plane has the plane normal for now
 			Color color;
+			//some matrials next time it will be a full structur
+			Color Ka,Kd,Ks;
 
 		public:
 			Plane();
@@ -40,9 +42,20 @@ namespace RP
 			void setPosition(const Vec4f&);
 			void setNormal(const Vec4f&);
 
+			virtual Color getKa()const;
+			virtual Color getKs()const;
+			virtual Color getKd()const;
+
+
+			void  setKs(const Color);
+			void  setKa(const Color);
+			void  setKd(const Color);
+
+
 			Vec4f getPosition()const;
 			Vec4f getNormal()const;
-
+			virtual Vec4f ObjectNormal_at(const Vec4f&)const;
+			virtual bool isShining();
 	};
 
 } /* namespace RP */

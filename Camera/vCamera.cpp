@@ -204,6 +204,7 @@ namespace RP
 		Vec4f t = Vec4f(0.0,0.0,0.0,1.0);
 
 		Transforme3D Translate;
+
 		this->V = Mat4x4(u,v,w,t).Transpose() * Translate.translate(-this->CameraPos);
 
 	}

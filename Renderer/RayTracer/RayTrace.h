@@ -17,6 +17,7 @@
 #include "MHeader.h"
 #include "Objects.h"
 #include "vCamera.h"
+#include "LightSources.h"
 #include "Color.h"
 namespace RP
 {
@@ -28,7 +29,8 @@ namespace RP
 			RayTrace();
 			virtual ~RayTrace();
 			bool Hit(const float t);
-			Color* Tracer(vector<Objects*>,const vCamera&,const int w, const int h); // this is our render raytracer algorithme
+			Color PhongShading(float,float,float,vector<LightSources*>,vector<Objects *>,int,const Vec4f&,Vec4f); // calculate the true color
+			Color* Tracer(vector<Objects*>,vector<LightSources*>,float,float,float,const vCamera&,const int w, const int h); // this is our render raytracer algorithme
 	};
 
 } /* namespace RP */
